@@ -1,0 +1,46 @@
+server:
+  name: opensearch-dashboards
+  host: "0.0.0.0"
+
+opensearch:
+  hosts: 
+    - "https://opensearch-node01:9200"
+    - "https://opensearch-node02:9200"
+    - "https://opensearch-node03:9200"
+  ssl:
+      verificationMode: full
+      certificateAuthorities: ["/usr/share/opensearch-dashboards/config/certificates/ca/ca.pem"]
+      certificate: "/usr/share/opensearch-dashboards/config/certificates/opensearch-dashboards/opensearch-dashboards.pem"
+      key: "/usr/share/opensearch-dashboards/config/certificates/opensearch-dashboards/opensearch-dashboards.key"
+
+
+opensearch.requestHeadersAllowlist: ["securitytenant", "Authorization"]
+
+#logging:
+  #dest: /usr/share/opensearch-dashboards/logs/opensearch_dashboards.log
+
+# Encrypt traffic between the browser and OpenSearch-Dashboards
+server.ssl:
+  enabled: true
+  certificateAuthorities: ["/usr/share/opensearch-dashboards/config/certificates/ca/ca.pem"]
+  certificate: "/usr/share/opensearch-dashboards/config/certificates/opensearch-dashboards/opensearch-dashboards.pem"
+  key: "/usr/share/opensearch-dashboards/config/certificates/opensearch-dashboards/opensearch-dashboards.key"
+
+#Enable Machine Learning Features
+ml_commons_dashboards:
+  enabled: true
+    
+#Multi Tenancy Settings
+opensearch_security:
+  multitenancy:
+    enabled: true
+    tenants:
+      enable_global: true
+      enable_private: true
+      preferred: ["Private", "Global"]
+    enable_filter: true
+  readonly_mode.roles: ["kibana_read_only"]
+  cookie.secure: false
+  allow_client_certificates: true
+
+
