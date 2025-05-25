@@ -23,6 +23,7 @@ services:
       - ./config/setup/config/internal_users.yml:/usr/share/opensearch/config/opensearch-security/internal_users.yml:ro,Z
       - ./config/setup/config/config.yml:/usr/share/opensearch/config/opensearch-security/config.yml:ro,Z
       - ./config/setup/config/roles_mapping.yml:/usr/share/opensearch/config/opensearch-security/roles_mapping.yml:ro,Z
+      - ./config/setup/config/roles.yml:/usr/share/opensearch/config/opensearch-security/roles.yml:ro,Z
       - ./config/setup/entrypoint.sh:/entrypoint.sh:ro,Z
     networks:
       - opensearch-net   
@@ -136,6 +137,25 @@ services:
       - 5601:5601
     networks:
       - opensearch-net 
+
+  opensearch-logstash:
+    image: opensearchproject/logstash-oss-with-opensearch-output-plugin:${LOGSTASH_VERSION:-latest}
+    container_name: opensearch-logstash
+    restart: unless-stopped
+    environment:
+      LS_JAVA_OPTS: -Xms256m -Xmx256m
+      http.host: 0.0.0.0
+      node.name: logstash
+    volumes:
+      - ./stack-data/certificates:/usr/share/logstash/config/certificates:ro
+      - ./stack-data/logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
+      - ./stack-data/logstash/grok-patterns:/usr/share/logstash/grok-patterns:ro,Z
+      - ./stack-data/logstash/mappings:/usr/share/logstash/mappings:ro,Z
+      - ./stack-data/ingest:/ingest:rw,Z
+    ports:
+      - 5044:5044
+    networks:
+      - opensearch-net
 
 
 networks:

@@ -51,5 +51,6 @@ Thumbs.db
 #Env files
 .env
 
-#Stack data folder
+#Folders that relate to stack data
 stack-data/
+config/logstash/

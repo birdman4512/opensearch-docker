@@ -13,7 +13,7 @@ opensearch_uri="${OPENSEARCH_HOST:-opensearch-node01}:${OPENSEARCH_PORT:-9200}"
 CERT_DIR="/certs" #No trailing /
 
 #Client Certificate to be generated
-clientCertificates=("admin" "opensearch-dashboards" "opensearch-node01" "opensearch-node02" "opensearch-node03" "client")
+clientCertificates=("admin" "opensearch-dashboards" "opensearch-node01" "opensearch-node02" "opensearch-node03" "logstash" "client")
 
 
 # --------------------------------------------------------
