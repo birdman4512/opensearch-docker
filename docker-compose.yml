@@ -5,6 +5,8 @@ services:
       - setup
     build:
       context: ./config/setup/
+      args:
+        OPENSEARCH_VERSION: ${OPENSEARCH_VERSION:-latest}
     init: true
     environment:
       OPENSEARCH_JAVA_OPTS: "-Xms512m -Xmx512m" # minimum and maximum Java heap size, recommend setting both to 50% of system RAM
@@ -138,9 +140,12 @@ services:
     networks:
       - opensearch-net 
 
-  opensearch-logstash:
-    image: opensearchproject/logstash-oss-with-opensearch-output-plugin:${LOGSTASH_VERSION:-latest}
-    container_name: opensearch-logstash
+  logstash:
+    container_name: logstash
+    build:
+      context: ./config/logstash/
+      args:
+        LOGSTASH_VERSION: ${LOGSTASH_VERSION:-9.0.1}
     restart: unless-stopped
     environment:
       LS_JAVA_OPTS: -Xms256m -Xmx256m
