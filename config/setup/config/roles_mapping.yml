@@ -13,3 +13,8 @@ kibana_server:
   users:
     - "opensearch-dashboards"
 
+logstash_writer:
+  reserved: true
+  users:
+    - "logstash"
+
