@@ -55,7 +55,7 @@ services:
         hard: 65536
     volumes:
       - "./config/opensearch/config/opensearch.yml:/usr/share/opensearch/config/opensearch.yml"
-      - "./stack-data/data/opensearch/opensearch-node01:/usr/share/opensearch/data"
+      - "os-data1:/usr/share/opensearch/data"
       - ./stack-data/certificates:/usr/share/opensearch/config/certificates:ro
     ports:
       - 9200:9200 # REST API
@@ -88,7 +88,7 @@ services:
         hard: 65536
     volumes:
       - "./config/opensearch/config/opensearch.yml:/usr/share/opensearch/config/opensearch.yml"
-      - "./stack-data/data/opensearch/opensearch-node02:/usr/share/opensearch/data"
+      - "os-data2:/usr/share/opensearch/data"
       - ./stack-data/certificates:/usr/share/opensearch/config/certificates:ro
     expose:
       - 9200:9200 # REST API
@@ -118,7 +118,7 @@ services:
         hard: 65536
     volumes:
       - "./config/opensearch/config/opensearch.yml:/usr/share/opensearch/config/opensearch.yml"
-      - "./stack-data/data/opensearch/opensearch-node03:/usr/share/opensearch/data"
+      - "os-data1:/usr/share/opensearch/data"
       - ./stack-data/certificates:/usr/share/opensearch/config/certificates:ro
     expose:
       - 9200:9200 # REST API
@@ -166,3 +166,8 @@ services:
 networks:
   opensearch-net:
     driver: bridge
+
+volumes:
+  os-data1:
+  os-data2:
+  os-data3:
